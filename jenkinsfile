@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    tools { nodejs "node" }
+
+    parameters {
+        string(name: 'container_name', defaultValue: 'appJenkins', description: 'Nombre del contenedor de docker')
+        string(name: 'image_name', defaultValue: 'practica', description: 'Nombre de la imagen de docker')
+        string(name: 'tag_name', defaultValue: 'lts', description: 'Tag de la imagen de docker')
+        string(name: 'container_port', defaultValue: '3000', description: 'Puerto del contenedor de docker')
+    }
+    
+    stages {
+        stage('install') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Yhadilupis/practica_webhook.git'
+            }
+        }
+
+        stage('npminstall') {
+            steps {
+                sh 'npm install'
+            }
+        }
+
+    }
+}
